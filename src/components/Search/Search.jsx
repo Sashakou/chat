@@ -1,5 +1,5 @@
-import React, { useEffect, useState, useRef } from 'react';
-import {ChangeActiveChatCreator, AuthorizedCreator} from "../../redux/actions";
+import React, { useState } from 'react';
+import {ChangeActiveChatCreator, AuthorizedCreator, ShowChatCreator, ShowContactsCreator} from "../../redux/actions";
 import {connect} from "react-redux";
 import { GoogleLogout } from 'react-google-login';
 function Search(props) {
@@ -11,13 +11,13 @@ function Search(props) {
     const SearchItemHeandler = (id) => {
         props.ChangeActiveChatCreator(id);
         setLetters('');
+        if(document.documentElement.clientWidth < 768){
+            props.ShowChatCreator(true);
+            props.ShowContactsCreator(false);
+        }
     }
     const LogoutSuccessGoogle = () => {
-        console.log('LogoutSuccessGoogle');
         props.AuthorizedCreator(false);
-    }
-    const responseFailureGoogle = (response) => {
-        console.log(response);
     }
     return (
         <div className="searchBlock">
@@ -40,7 +40,6 @@ function Search(props) {
                     clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
                     buttonText="Log out"
                     onLogoutSuccess={LogoutSuccessGoogle}
-                    onFailure={responseFailureGoogle}
                 />
             </div>
             <div className="coverInput">
@@ -57,11 +56,8 @@ function Search(props) {
                 {
                     letters
                     ? contacts.map((item) => {
-                            console.log(letters);
                             let getLetters = item.name.slice(0, letters.length);
-                            console.log(getLetters);
                             if(getLetters === letters){
-                                console.log(item);
                                 return <div className="resSearchItem" onClick={() => SearchItemHeandler(item.id)} key={item.id}>
                                     <img src={require(`../../img/${item.img}`)} alt='userFoto' loading="lazy" height="20" width="20"/>
                                     <span>{item.name}</span>
@@ -83,7 +79,7 @@ const mapStateToProps = state => {
     }
 }
 const mapDispatchToProps =  {
-    ChangeActiveChatCreator, AuthorizedCreator
+    ChangeActiveChatCreator, AuthorizedCreator, ShowChatCreator, ShowContactsCreator
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Search);

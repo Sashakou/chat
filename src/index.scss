@@ -201,6 +201,11 @@
     position: absolute;
     top: 0;
     width: 100%;
+    @media only screen and (max-width: 450px) {
+      min-height: 50px;
+      padding: 10px 0;
+      max-height: 70px;
+    }
     .back{
       display: flex;
       margin-left: 20px;

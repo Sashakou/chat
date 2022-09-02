@@ -1,8 +1,6 @@
 import {
     USERS,
     LOADER,
-    ACTIVE_CHAT,
-    ADD_MESSAGE,
     ADD_MESSAGE_USER,
     ADD_MESSAGE_CONTACT,
     SORT_CONTACT,

@@ -8,8 +8,6 @@ import {connect} from "react-redux";
 import {useNavigate} from "react-router-dom";
 
 function CoverChat(props) {
-    console.log(props);
-    console.log(process.env.REACT_APP_GOOGLE_CLIENT_ID);
     const navigate = useNavigate();
     useEffect(() => {
         if(!props.authorized) navigate('/sing-in');

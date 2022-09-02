@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect } from 'react';
 import {AuthorizedCreator, ShowChatCreator, ShowContactsCreator, UserDataCreator} from "../../redux/actions";
 import {connect} from "react-redux";
 import {GoogleLogin} from 'react-google-login';
@@ -10,7 +10,6 @@ function Singin(props) {
     }
     const navigate = useNavigate();
     useEffect(() => {
-        console.log(props.authorized);
         if(props.authorized) navigate('/');
     }, [props.authorized]);
     return (

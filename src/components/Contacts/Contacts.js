@@ -25,7 +25,6 @@ function Contacts(props) {
     }
     const findChatByID = findChatByIDCover(chats);
     const contactsItemHeandler = (id) => {
-        console.log(id);
         props.ChangeActiveChatCreator(id);
         props.DeleteIdNewMessageCreator(id);
         if(document.documentElement.clientWidth < 768){

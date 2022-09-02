@@ -3,7 +3,7 @@ import appReducer from "./reducers/appReducer";
 import functionalityReducer from "./reducers/functionalityReducer";
 import createSagaMiddleware from 'redux-saga';
 import {messageWatcher} from "./saga/messageSaga";
-import logger from 'redux-logger'
+//import logger from 'redux-logger'
 const sagaMiddleware = createSagaMiddleware();
 const reducers = {
     appState: appReducer,
@@ -13,8 +13,7 @@ const reducer = combineReducers(reducers);
 const store = createStore(
     reducer,
     compose(
-        //applyMiddleware(sagaMiddleware)
-        applyMiddleware(sagaMiddleware, logger),
+        applyMiddleware(sagaMiddleware)
     )
 );
 
