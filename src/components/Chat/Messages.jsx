@@ -1,10 +1,5 @@
 import React from 'react';
 function Messages({value, date, img, is_contact_value}) {
-    // console.log(value);
-    // console.log(date);
-    // console.log(img);
-    // console.log(is_contact_value);
-    // console.log('-----------');
     return (
         <div className={`message ${is_contact_value ? 'contactValue' : 'userValue'}`}>
             <div className="innerMessage">

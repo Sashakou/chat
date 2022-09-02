@@ -3,8 +3,6 @@ import Messages from "./Messages";
 import moment from 'moment'
 import {
     requestMessage,
-    AddMesasageCreator,
-    AddMessageContactCreator,
     AddMessageUserCreator,
     ShowChatCreator, ShowContactsCreator
 } from "../../redux/actions";
@@ -12,41 +10,11 @@ import {connect} from "react-redux";
 
 
 function Chat(props) {
-    //alert('Chat');
     const [messageText, setMessageText] = useState('');
     const coverMessagesRef = useRef();
-    //console.log(props);
-    // let reformatDate = (date) => {
-    //     let rr = moment().format(date);
-    //     console.log(rr);
-    //     let rr2 = moment().format();
-    //     console.log(rr2);
-    //     var dt = moment(date);
-    //     var dt1 = moment();
-    //     let day2 = dt.format('dddd');
-    //     // console.log(dt);
-    //     // console.log(day2);
-    //     //alert(`${dt.format('L')}, ${dt.format('LT')}`);
-    //     //alert(`${dt.format('L')}, ${dt.format('LT')}`);
-    //     console.log(`${dt.format('L')}, ${dt.format('LT')}`);
-    //     console.log(`${dt1.format('L')}, ${dt1.format('LT')}`);
-    //
-    //     let dateLocal = new Date(date);
-    //     if(!date) dateLocal = new Date();
-    //     // let dateLocal = moment().format(date);
-    //     // if(!date) dateLocal = moment().format();
-    //     let day = dateLocal.getDate();
-    //     let month = ("0" + (dateLocal.getMonth() + 1)).slice(-2)
-    //     let year = dateLocal.getFullYear();
-    //     let hou = dateLocal.getHours();
-    //     let min = (dateLocal.getMinutes() < 10 ? '0' : '') + dateLocal.getMinutes();
-    //     //console.log( `${month}/${day}/${year}, ${hou}:${min}`);
-    //     return `${month}/${day}/${year}, ${hou}:${min}` ;
-    // }
     const reformatDateMoment = (date) => {
         let dateLocal = moment(date);
         if(!date) dateLocal = moment();
-        //return `${month}/${day}/${year}, ${hou}:${min}`;
         return `${dateLocal.format('L')}, ${dateLocal.format('LT')}`;
     }
     let img, chat, name;
@@ -55,35 +23,13 @@ function Chat(props) {
         chat = props.chats.find(item => item.id === props.active_chat ).chat;
         name = props.contacts.find(item => item.id === props.active_chat ).name;
     }
-    const objStateNew = (mes, id) => {
-        //console.log(mes);
-        //console.log(id);
-        //console.log(props.chats);
-        let dateLocal = new Date();
-        let chatsCopy = JSON.parse(JSON.stringify(props.chats));
-        let ntwMes = {
-            value: mes,
-            is_contact_value: false,
-            //date: `${dateLocal.getFullYear()}-${("0" + (dateLocal.getMonth() + 1)).slice(-2)}-${dateLocal.getDate()} ${dateLocal.getHours()}:${dateLocal.getMinutes()}:${dateLocal.getSeconds()}.${dateLocal.getMilliseconds()}`
-            date: `${moment().format()}`
-        }
-        chatsCopy.find(item => item.id === id ).chat.push(ntwMes);
-        console.log(chatsCopy);
-        return chatsCopy;
-    }
     const handleSubmit = (event) => {
         event.preventDefault();
-        //console.log(messageText);
-        //props.AddMessageUserCreator(objStateNew(messageText, props.active_chat)); //Добавляємо повідомлення в чат
         props.AddMessageUserCreator(messageText, props.active_chat); //Добавляємо повідомлення в чат
-
         setMessageText('');
-
         props.requestMessage(); //Відправляємо запит на API з затримкою повідомлення від контакта в чат
-
     };
     const handleChangeInput = (event) => {
-        //console.log(event.target.value)
         setMessageText(event.target.value);
     };
     const backHandler = () => {
@@ -91,9 +37,7 @@ function Chat(props) {
         props.ShowContactsCreator(true);
     }
     useEffect(() => {
-        //console.log('useEffect props.chats');
         if(props.active_chat){
-            //console.log('props.active_chat');
             coverMessagesRef.current.scrollTo(0, coverMessagesRef.current.scrollHeight);
         }
     }, [props.chats, props.active_chat]);
@@ -127,6 +71,7 @@ function Chat(props) {
                 </div>
                 <div className="name">{name}</div>
             </div>
+
             <div className="coverMessages" ref={coverMessagesRef}>
                 {
                     chat.map(item => (
@@ -135,7 +80,6 @@ function Chat(props) {
                             img={img}
                             value={item.value}
                             is_contact_value={item.is_contact_value}
-                            //date={reformatDate(item.date)}
                             date={reformatDateMoment(item.date)}
                         />
                     ))
@@ -156,7 +100,6 @@ function Chat(props) {
     );
 }
 const mapStateToProps = state => {
-    //console.log(state);
     return {
         chats: state.appState.chats,
         contacts: state.appState.contacts,

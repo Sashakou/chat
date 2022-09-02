@@ -1,66 +1,29 @@
 import React, { useEffect, useState, useRef } from 'react';
-import userImg from "../../img/default_foto.jpg";
-import userImgSasha from "../../img/unnamed.png";
 import {ChangeActiveChatCreator, AuthorizedCreator} from "../../redux/actions";
 import {connect} from "react-redux";
 import { GoogleLogout } from 'react-google-login';
 function Search(props) {
     let contacts = props.appState.contacts;
-    //alert('Search');
-    //alert(props.user_name);
     const [letters, setLetters] = useState('');
-    // const [searchText, setSearchText] = useState('');
-    // const handleChangeInput = (event) => {
-    //     //console.log(event.target.value)
-    //     setSearchText(event.target.value);
-    // };
     const searchContByName = (event) => {
         setLetters(event.target.value);
-        // let lettersLength = letters.length;
-        // contacts.map((item) => {
-        //     console.log(letters);
-        //     let getLetters = item.name.slice(0, lettersLength);
-        //     console.log(getLetters);
-        //     //return getLetters === letters;
-        //     let copySearchContArr = [...searchContArr];
-        //     if(getLetters === letters){
-        //         console.log(item);
-        //         console.log(searchContArr);
-        //         console.log(copySearchContArr);
-        //         copySearchContArr.push(item);
-        //     }
-        //     console.log(copySearchContArr);
-        //     console.log(searchContArr);
-        //     setSearchContArr(copySearchContArr);
-        //     //console.log(getLetters === letters);
-        // });
     }
     const SearchItemHeandler = (id) => {
-        //setLetters(event.target.value);
-        console.log(id);
         props.ChangeActiveChatCreator(id);
         setLetters('');
     }
     const LogoutSuccessGoogle = () => {
         console.log('LogoutSuccessGoogle');
         props.AuthorizedCreator(false);
-        // console.log(response.profileObj.imageUrl);
-        //props.AuthorizedCreator(true);
-       // props.UserDataCreator(response.profileObj.name, response.profileObj.imageUrl);
     }
     const responseFailureGoogle = (response) => {
         console.log(response);
     }
-    // console.log('--------');
-    // console.log(searchContArr);
-    // console.log(searchContArr.length);
-    // console.log('--------');
     return (
         <div className="searchBlock">
             <div className="userData">
                 <div className="userFoto checked">
                     <img src={props.user_img} alt={props.user_name} loading="lazy" height="50" width="50"/>
-                    {/*<img src={userImgSasha} alt={props.user_name} loading="lazy" height="50" width="50"/>*/}
                     <svg id="Capa_1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 305.002 305.002">
                         <g>
                             <path d="M152.502,0.001C68.412,0.001,0,68.412,0,152.501s68.412,152.5,152.502,152.5c84.089,0,152.5-68.411,152.5-152.5
@@ -78,8 +41,6 @@ function Search(props) {
                     buttonText="Log out"
                     onLogoutSuccess={LogoutSuccessGoogle}
                     onFailure={responseFailureGoogle}
-                    //cookiePolicy={'single_host_origin'}
-                    //isSignedIn={true}
                 />
             </div>
             <div className="coverInput">
@@ -106,7 +67,6 @@ function Search(props) {
                                     <span>{item.name}</span>
                                 </div>
                             }
-                            //return <span>There are no contacts</span>
                         })
                     : null
                 }
@@ -115,7 +75,6 @@ function Search(props) {
     );
 }
 const mapStateToProps = state => {
-    //console.log(state);
     return {
         appState: state.appState,
         functionalityReducer: state.functionalityReducer,

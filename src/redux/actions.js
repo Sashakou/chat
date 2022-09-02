@@ -2,7 +2,7 @@ import {
     USERS, REQUEST_USERS, ADD_MESSAGE_ALERT, ADD_MESSAGE_OBJ,
     LOADER, ACTIVE_CHAT, ADD_MESSAGE_CONTACT, REQUEST_MESSAGE,
     ADD_MESSAGE_USER, DELETE_MESSAGE_OBJ, DELETE_ID_NEW_MESSAGE, SORT_CONTACT,
-    CHANGE_SHOW_CONTACTS, CHANGE_SHOW_CHAT, CHANGE_AUTHORIZED, CHANGE_USER_DATA
+    CHANGE_SHOW_CONTACTS, CHANGE_SHOW_CHAT, CHANGE_AUTHORIZED, CHANGE_USER_DATA, SHOW_HIDE_ALERT
 } from './actionsTypes';
 
 export function GetUsersCreator(users) {
@@ -37,12 +37,7 @@ export function AddMessageContactCreator(mes, id) {
         id: id
     }
 }
-// export function AddMessageUserCreator(mes) {
-//     return {
-//         type: ADD_MESSAGE_USER,
-//         payload: mes
-//     }
-// }
+
 export function AddMessageUserCreator(mes, id) {
     console.log(mes);
     console.log(id);
@@ -111,4 +106,22 @@ export function UserDataCreator(name, img) {
         name: name,
         img: img
     }
+}
+export function AlertCreator(text) {
+    console.log(text);
+    console.log(Boolean(text));
+    if(text){
+        return {
+            type: SHOW_HIDE_ALERT,
+            val: true,
+            text: text
+        }
+    }else{
+        return {
+            type: SHOW_HIDE_ALERT,
+            val: false,
+            text: null
+        }
+    }
+
 }

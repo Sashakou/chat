@@ -6,14 +6,10 @@ import {
     hideLoader,
     LoaderCreator,
     showAlert,
-    showLoader, SortContactsCreator
+    showLoader, SortContactsCreator, AlertCreator
 } from '../actions'
 import {GetMessage} from "../API/ChucknorrisAPI";
-//import {objStateNew} from '../AddNewMessageAlert';
 import {REQUEST_MESSAGE} from "../actionsTypes";
-//import {newMessageID} from "../AddNewMessageAlert";
-//console.log(objStateNew());
-//console.log(REQUEST_USERS);
 import store from '../redux-store';
 
 export function* messageWatcher() {
@@ -46,11 +42,8 @@ function* messageWorker() {
         yield put(DeleteNewMessageArrCreator()); // видалення тимчасових даних про нові повідомлення
 
     } catch (e) {
-        console.log('Нето щось');
-        console.log(e);
-        //yield put(showAlert('Что-то пошло не так'))
-    } finally {
-        //console.log('finally зайшло');
-        //yield put(LoaderCreator(false));
+        yield put(AlertCreator('Something went wrong, try again'));
+        yield call(delay, 3000);
+        yield put(AlertCreator(null));
     }
 }

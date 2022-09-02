@@ -1,7 +1,7 @@
 import {
     ACTIVE_CHAT, ADD_MESSAGE_OBJ, ADD_MESSAGE_ALERT,
     DELETE_ID_NEW_MESSAGE, DELETE_MESSAGE_OBJ, CHANGE_SHOW_CONTACTS,
-    CHANGE_SHOW_CHAT, CHANGE_AUTHORIZED, CHANGE_USER_DATA
+    CHANGE_SHOW_CHAT, CHANGE_AUTHORIZED, CHANGE_USER_DATA, SHOW_HIDE_ALERT
 } from '../actionsTypes';
 
 let initialState = {
@@ -12,19 +12,13 @@ let initialState = {
     show_contacts: true,
     authorized: false,
     user_name: null,
-    user_img: null
+    user_img: null,
+    alert: null,
+    alert_text: null
 }
 const functionalityReducer = (state = initialState, action ) => {
-    //console.log(state);
-    //console.log(action);
-    //console.log('zaushlo - commonReducer');
-    //alert('state functionalityReducer');
-    //alert(state.user_name);
     switch (action.type) {
         case ADD_MESSAGE_ALERT:
-            // if(state.new_message_alert.find(item => item === id)){
-            //
-            // }
             return {
                 ...state,
                 new_message_alert: state.new_message_alert.concat(state.arr_mes[0].id)
@@ -61,6 +55,12 @@ const functionalityReducer = (state = initialState, action ) => {
                 ...state,
                 user_name: action.name,
                 user_img: action.img
+            }
+        case SHOW_HIDE_ALERT:
+            return {
+                ...state,
+                alert: action.val,
+                alert_text: action.text
             }
         default:
             return state;

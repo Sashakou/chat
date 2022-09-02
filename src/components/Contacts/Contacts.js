@@ -10,36 +10,16 @@ import {
 import moment from "moment";
 
 function Contacts(props) {
-    //alert('Contacts');
-    const [newMessage, setNewMessage] = useState(false);
-    //console.log(props);
     let contacts = props.appState.contacts;
     let chats = props.appState.chats;
     let arrIdNewMessage = props.functionalityReducer.new_message_alert;
     let active_chat = props.functionalityReducer.active_chat;
-    //console.log('contacts:', contacts);
-    //console.log('chats:', chats);
-    const reformatDate = (date) => {
-        //console.log(date);
-        let dateLocal = new Date(date);
-        const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ];
-        let day = dateLocal.getDate();
-        let month = monthNames[dateLocal.getMonth()].substr(0, 3);
-        let year = dateLocal.getFullYear();
-        console.log(`${month} ${day}, ${year}`);
-        return ( `${month} ${day}, ${year}`);
-    }
     const reformatDateMoment = (date) => {
         let dateLocal = moment(date);
-        //return `${month}/${day}/${year}, ${hou}:${min}`;
-        console.log( `${dateLocal.format('ll')}`) ;
         return `${dateLocal.format('ll')}`;
     }
     const findChatByIDCover = (chat) => {
-        //console.log(chat);
         return function(id) {
-            //console.log(id);
-            //return chat.find(item => item.id === id ).chat[chat.find(item => item.id === id ).chat.length - 1].value;
             return chat.find(item => item.id === id ).chat[chat.find(item => item.id === id ).chat.length - 1];
         }
     }
@@ -58,7 +38,6 @@ function Contacts(props) {
             props.DeleteIdNewMessageCreator(arrIdNewMessage.find(item => item === active_chat));
         }
     }, [arrIdNewMessage]);
-    //alert(reformatDate("2020-01-06 13:42:30.177068"));
     return (
         <div className="Contacts">
             <h3>Chats</h3>
@@ -72,7 +51,6 @@ function Contacts(props) {
                             img={item.img}
                             name={item.name}
                             lastMessage={findChatByID(item.id).value}
-                            //date={reformatDate(findChatByID(item.id).date)}
                             date={reformatDateMoment(findChatByID(item.id).date)}
                             active={props.functionalityReducer.active_chat}
                             arrIdNewMessage={arrIdNewMessage}
@@ -84,7 +62,6 @@ function Contacts(props) {
     );
 }
 const mapStateToProps = state => {
-    //console.log(state);
     return {
         appState: state.appState,
         functionalityReducer: state.functionalityReducer

@@ -130,19 +130,10 @@ let initialState = {
         }
     ]
 }
-// console.log(JSON.parse (window.localStorage.getItem('data')));
-// console.log(Boolean(window.localStorage.getItem('data')));
 if(window.localStorage.getItem('data')) initialState = JSON.parse(window.localStorage.getItem('data'));
-let dateLocal = new Date();
-//let dateNow = `${dateLocal.getFullYear()}-${("0" + (dateLocal.getMonth() + 1)).slice(-2)}-${dateLocal.getDate()} ${dateLocal.getHours()}:${dateLocal.getMinutes()}:${dateLocal.getSeconds()}.${dateLocal.getMilliseconds()}`;
 let dateNow = `${moment().format()}`;
 
 const appReducer = (state = initialState, action ) => {
-    //console.log(state);
-    //console.log(action);
-    //console.log('zaushlo - commonReducer');
-    // alert('state');
-    // alert(state.contacts[0].name);
     switch (action.type) {
         case USERS:
             return {...state, users: action.payload}
@@ -151,7 +142,6 @@ const appReducer = (state = initialState, action ) => {
         case SORT_CONTACT:
             return {...state, contacts: action.payload}
         case ADD_MESSAGE_USER:
-            //return {...state, chats: action.payload}
             let newMesUser = {
                 value: action.payload,
                 is_contact_value: false,
@@ -159,10 +149,8 @@ const appReducer = (state = initialState, action ) => {
             }
             let copyChatUser = JSON.parse(JSON.stringify(state.chats));
             copyChatUser.find(item => item.id === action.id).chat.push(newMesUser);
-            //console.log(copyChatUser);
             return {...state, chats: copyChatUser }
         case ADD_MESSAGE_CONTACT:
-            //return {...state, chats: action.payload}
             let newMesContact = {
                 value: action.payload,
                 is_contact_value: true,
@@ -170,7 +158,6 @@ const appReducer = (state = initialState, action ) => {
             }
             let copyChatContact = JSON.parse(JSON.stringify(state.chats));
             copyChatContact.find(item => item.id === action.id).chat.push(newMesContact);
-            //console.log(copyChatContact);
             return {...state, chats: copyChatContact }
         default:
             return state;
